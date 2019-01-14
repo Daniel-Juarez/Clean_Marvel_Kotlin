@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.puzzlebench.clean_marvel_kotlin.R
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
+import com.puzzlebench.clean_marvel_kotlin.presentation.DetailCharacterFragment
 import com.puzzlebench.clean_marvel_kotlin.presentation.MainActivity
 import com.puzzlebench.clean_marvel_kotlin.presentation.adapter.CharacterAdapter
 import com.puzzlebench.clean_marvel_kotlin.presentation.extension.showToast
@@ -13,7 +14,12 @@ import java.lang.ref.WeakReference
 class CharecterView(activity: MainActivity) {
     private val activityRef = WeakReference(activity)
     private val SPAN_COUNT = 1
-    var adapter = CharacterAdapter { character -> activity.applicationContext.showToast(character.name) }
+    var adapter = CharacterAdapter { character ->
+        //activity.applicationContext.showToast(character.name)
+
+        val fragment = DetailCharacterFragment.newInstance(character.id)
+        fragment.show(activity.fragmentManager,"DetailDialog")
+    }
 
     fun init() {
         val activity = activityRef.get()

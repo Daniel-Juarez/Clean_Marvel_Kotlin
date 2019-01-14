@@ -14,17 +14,17 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"your-private-apikey"'
-            buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"your-public-apikey"'
-            buildConfigField "String", "MARVEL_BASE_URL", '"http://gateway.marvel.com/public/"'
+            buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"e06e48a05a4c410c56c8d10bd360c4c0aa8f9e7b"'
+            buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"8da2e7269fff32817c0f81f419db00ce"'
+            buildConfigField "String", "MARVEL_BASE_URL", '"http://gateway.marvel.com/"'
 
         }
 
         release {
             minifyEnabled false
-            buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"your-private-apikey"'
-            buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"your-public-apikey"'
-            buildConfigField "String", "MARVEL_BASE_URL", '"http://gateway.marvel.com/public/"'
+            buildConfigField "String", "PRIVATE_API_KEY_VALUE", '"e06e48a05a4c410c56c8d10bd360c4c0aa8f9e7b"'
+            buildConfigField "String", "PUBLIC_API_KEY_VALUE", '"8da2e7269fff32817c0f81f419db00ce"'
+            buildConfigField "String", "MARVEL_BASE_URL", '"http://gateway.marvel.com/"'
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    implementation 'com.android.support:support-v4:26.1.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
