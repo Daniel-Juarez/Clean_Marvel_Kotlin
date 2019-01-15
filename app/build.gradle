@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.puzzlebench.clean_marvel_kotlin"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -52,6 +53,7 @@ dependencies {
 
     testCompile "org.mockito:mockito-core:2.10.0"
     testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:design:26.1.0'
 
 
 }

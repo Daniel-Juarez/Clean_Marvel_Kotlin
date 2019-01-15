@@ -1,0 +1,43 @@
+package com.puzzlebench.clean_marvel_kotlin.data.mapper
+
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.CharacterDB
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.ThumbnailDB
+import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
+import com.puzzlebench.clean_marvel_kotlin.domain.model.Thumbnail
+
+
+open class CharacterMapperPersistence : BaseMapperRepository<Character, CharacterDB> {
+
+    override fun transform(character: Character): CharacterDB
+            = CharacterDB(
+            character.id,
+            character.name,
+            character.description,
+            transformToThumbnail(character.thumbnail)
+    )
+
+    override fun transformToResponse(type: CharacterDB): Character
+            = Character(
+            type.id,
+            type.name,
+            type.description,
+            transformToThumbnailResponse(type.thumbnail!!)
+    )
+
+    fun transformToThumbnail(thumbnail: Thumbnail): ThumbnailDB
+            = ThumbnailDB(
+            thumbnail.path,
+            thumbnail.extension
+    )
+
+    fun transformToThumbnailResponse(thumbnailDB: ThumbnailDB): Thumbnail
+            = Thumbnail(
+            thumbnailDB.path,
+            thumbnailDB.extension
+    )
+
+
+    fun transform(listCharacters: List<Character>): List<CharacterDB> = listCharacters.map { transform(it) }
+
+
+}

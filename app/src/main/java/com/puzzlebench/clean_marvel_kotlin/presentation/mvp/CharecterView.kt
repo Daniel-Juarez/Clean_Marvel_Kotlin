@@ -16,7 +16,6 @@ class CharecterView(activity: MainActivity) {
     private val SPAN_COUNT = 1
     var adapter = CharacterAdapter { character ->
         //activity.applicationContext.showToast(character.name)
-
         val fragment = DetailCharacterFragment.newInstance(character.id)
         fragment.show(activity.fragmentManager,"DetailDialog")
     }
@@ -55,5 +54,9 @@ class CharecterView(activity: MainActivity) {
     fun showLoading() {
         activityRef.get()!!.progressBar.visibility = View.VISIBLE
 
+    }
+
+    fun setOnClickListenerFloatButton(clickListener: View.OnClickListener) {
+        activityRef.get()!!.reloadActionButton.setOnClickListener(clickListener)
     }
 }
