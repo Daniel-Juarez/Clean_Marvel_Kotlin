@@ -9,9 +9,9 @@ class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-        var c = RealmConfiguration.Builder(applicationContext)
-        c.name("student")
-        c.deleteRealmIfMigrationNeeded()
-        Realm.setDefaultConfiguration(c.build())
+        var realmConfiguration = RealmConfiguration.Builder(applicationContext)
+        realmConfiguration.name("character")
+        realmConfiguration.deleteRealmIfMigrationNeeded()
+        Realm.setDefaultConfiguration(realmConfiguration.build())
     }
 }
