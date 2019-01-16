@@ -4,8 +4,8 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 open class CharacterDB(
-    @PrimaryKey open var id: Int = 0,
-    open var name: String = "",
-    open var description: String = "",
-    open var thumbnail: ThumbnailDB? = null
+    @PrimaryKey var id: Int = 0,
+    var name: String = "",
+    var description: String = "",
+    var thumbnail: ThumbnailDB? = null
 ): RealmObject()

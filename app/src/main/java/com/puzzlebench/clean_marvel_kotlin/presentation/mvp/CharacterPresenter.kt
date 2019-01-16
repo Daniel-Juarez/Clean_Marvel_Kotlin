@@ -26,11 +26,9 @@ class CharacterPresenter(view: CharecterView, private val getCharacterServiceUse
                 view.showToastNoItemToShow()
             } else {
                 view.showCharacters(characters)
-                //Save on DB
                 saveCharactersOnDB(characters)
             }
             view.hideLoading()
-
         }, { e ->
             view.hideLoading()
             view.showToastNetworkError(e.message.toString())

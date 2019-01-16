@@ -11,9 +11,9 @@ import kotlinx.android.synthetic.main.character_cards_layout.view.*
 class CharactersAdapterViewHolder(view: View, val listener: CharacterListener) : RecyclerView.ViewHolder(view) {
 
     fun bind(item: Character) = with(itemView) {
-        tv_item.text = item.name
+        text_item_name.text = item.name
         val string = item.thumbnail.path + "." + item.thumbnail.extension
-        image_thumbnail.getImageByUrl(string)
+        image_item_thumbnail.getImageByUrl(string)
         setOnClickListener { listener(item) }
     }
 }

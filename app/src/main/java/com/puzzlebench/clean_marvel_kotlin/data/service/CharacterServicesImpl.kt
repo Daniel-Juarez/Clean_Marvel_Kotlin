@@ -4,35 +4,36 @@ import com.puzzlebench.clean_marvel_kotlin.data.mapper.CharacterMapperService
 import com.puzzlebench.clean_marvel_kotlin.data.service.api.MarvelApi
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import io.reactivex.Observable
+import io.reactivex.Single
+import java.util.concurrent.Callable
 
 
-class CharacterServicesImpl(private val api: MarvelResquestGenerator = MarvelResquestGenerator(), private val mapper: CharacterMapperService = CharacterMapperService()) {
+class CharacterServicesImpl(private val api: MarvelResquestGenerator = MarvelResquestGenerator(), private val mapper: CharacterMapperService = CharacterMapperService()) : CharacterServices {
 
 
-    fun getCharacters(): Observable<List<Character>> {
-        return Observable.create { subscriber ->
+    override fun getCharacters(): Single<List<Character>> {
+        return Single.fromCallable {
             val callResponse = api.createService(MarvelApi::class.java).getCharacter()
             val response = callResponse.execute()
 
             if (response.isSuccessful) {
-                subscriber.onNext(mapper.transform(response.body()!!.data!!.result))
-                subscriber.onComplete()
+                mapper.transform(response.body()?.data?.result ?: emptyList())
             } else {
-                subscriber.onError(Throwable(response.message()))
+                emptyList()
             }
+
         }
     }
 
-    fun getCharacterDetail(id: Int): Observable<List<Character>> {
-        return Observable.create { subscriber ->
+    override fun getCharacterDetail(id: Int): Single<List<Character>> {
+        return Single.fromCallable {
             val callResponse = api.createService(MarvelApi::class.java).getCharacterDetail(id)
             val response = callResponse.execute()
 
             if (response.isSuccessful) {
-                subscriber.onNext(mapper.transform(response.body()!!.data!!.result))
-                subscriber.onComplete()
+                mapper.transform(response.body()?.data?.result?: emptyList())
             } else {
-                subscriber.onError(Throwable(response.message()))
+                emptyList()
             }
         }
     }

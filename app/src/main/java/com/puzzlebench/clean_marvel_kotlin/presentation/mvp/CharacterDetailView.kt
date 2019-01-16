@@ -20,51 +20,44 @@ class CharacterDetailView(fragment: DetailCharacterFragment) {
     var idCharacter:Int? = null
 
     fun init() {
-        val fragment = fragmentRef.get()
-        if (fragment != null) {
+        fragmentRef.get()?.let {
             showLoading()
-            idCharacter = fragment.idCharacter
-            fragment.closeButton.setOnClickListener{
+            idCharacter = it.idCharacter
+            it.button_detail_dismiss.setOnClickListener{
                 closeDialog()
             }
         }
-
     }
 
     fun showToastNoItemToShow() {
-        val fragment = fragmentRef.get()
-        if (fragment != null) {
-            val message = fragment.activity.resources.getString(R.string.message_no_items_to_show)
-            fragment.activity.showToast(message)
-
+        fragmentRef.get()?.let {
+            val message = it.resources.getString(R.string.message_no_items_to_show)
+            it.activity.showToast(message)
         }
     }
 
     fun showToastNetworkError(error: String) {
-        fragmentRef.get()!!.activity.showToast(error)
+        fragmentRef.get()?.let { it.activity.showToast(error) }
     }
 
     fun hideLoading() {
-        fragmentRef.get()!!.progressBarDetail.visibility = View.GONE
+        fragmentRef.get()?.let { it.progressbar_detail_character.visibility = View.GONE }
     }
 
     fun showCharacters(character: Character) {
-        val fragment = fragmentRef.get()
-        if (fragment != null) {
-            fragment.textName.text = character.name
-            fragment.textDescription.text = character.description
+        fragmentRef.get()?.let {
+            it.text_detail_character_name.text = character.name
+            it.text_detail_character_description.text = character.description
             val string = character.thumbnail.path + "." + character.thumbnail.extension
-            fragment.image_thumbnail_detail.getImageByUrl(string)
+            it.image_detail_character_thumbnail.getImageByUrl(string)
         }
-
-
     }
 
     fun showLoading() {
-        fragmentRef.get()!!.progressBarDetail.visibility = View.VISIBLE
+        fragmentRef.get()?.let { it.progressbar_detail_character.visibility = View.VISIBLE }
     }
 
     fun closeDialog(){
-        fragmentRef.get()!!.dismiss()
+        fragmentRef.get()?.let { it.dismiss() }
     }
 }

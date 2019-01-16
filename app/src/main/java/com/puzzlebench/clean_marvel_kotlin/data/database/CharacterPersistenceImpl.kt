@@ -2,26 +2,21 @@ package com.puzzlebench.clean_marvel_kotlin.data.database
 
 import com.puzzlebench.clean_marvel_kotlin.data.mapper.CharacterMapperPersistence
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.realm.Realm
-import io.realm.exceptions.RealmException
 
-class CharacterPersistenceImpl(private val mapper: CharacterMapperPersistence = CharacterMapperPersistence()){
+class CharacterPersistenceImpl(private val mapper: CharacterMapperPersistence = CharacterMapperPersistence()) : CharacterPersistence{
 
-    fun saveCharacter(listCharacters: List<Character>): Observable<Boolean> {
-        return Observable.create { subscriber ->
+    override fun saveCharacter(listCharacters: List<Character>): Single<Boolean> {
+        return Single.fromCallable {
             val listToSave = mapper.transform(listCharacters)
-            val realm = Realm.getDefaultInstance()
-            try {
+
+            Realm.getDefaultInstance().use{ realm ->
                 realm.beginTransaction()
                 listToSave.map { realm.copyToRealmOrUpdate(it) }
                 realm.commitTransaction()
-
-                subscriber.onNext(true)
-                subscriber.onComplete()
-            }catch (e: RealmException) {
-                subscriber.onError(Throwable(e.message))
             }
+            true
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.puzzlebench.clean_marvel_kotlin.domain.usecase
 
-import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServicesImpl
+import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServices
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
-import io.reactivex.Observable
+import io.reactivex.Single
 
-open class GetCharacterDetailServiceUseCase(private val characterServiceImp: CharacterServicesImpl) {
-   open operator fun invoke(id: Int): Observable<List<Character>> = characterServiceImp.getCharacterDetail(id)
+class GetCharacterDetailServiceUseCase(private val characterService: CharacterServices) {
+   operator fun invoke(id: Int): Single<List<Character>> = characterService.getCharacterDetail(id)
 }

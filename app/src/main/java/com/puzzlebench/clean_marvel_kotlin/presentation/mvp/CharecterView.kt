@@ -15,36 +15,31 @@ class CharecterView(activity: MainActivity) {
     private val activityRef = WeakReference(activity)
     private val SPAN_COUNT = 1
     var adapter = CharacterAdapter { character ->
-        //activity.applicationContext.showToast(character.name)
         val fragment = DetailCharacterFragment.newInstance(character.id)
         fragment.show(activity.fragmentManager,"DetailDialog")
     }
 
     fun init() {
-        val activity = activityRef.get()
-        if (activity != null) {
-            activity.recycleView.layoutManager = GridLayoutManager(activity, SPAN_COUNT)
-            activity.recycleView.adapter = adapter
-            showLoading()
+        activityRef.get()?.let {
+            it.recycleview_list_characters.layoutManager = GridLayoutManager(it, SPAN_COUNT)
+            it.recycleview_list_characters.adapter = adapter
         }
-
+        showLoading()
     }
 
     fun showToastNoItemToShow() {
-        val activity = activityRef.get()
-        if (activity != null) {
-            val message = activity.baseContext.resources.getString(R.string.message_no_items_to_show)
-            activity.applicationContext.showToast(message)
-
+        activityRef.get()?.let {
+            val message = it.baseContext.resources.getString(R.string.message_no_items_to_show)
+            it.applicationContext.showToast(message)
         }
     }
 
     fun showToastNetworkError(error: String) {
-        activityRef.get()!!.applicationContext.showToast(error)
+        activityRef.get()?.let { it.applicationContext.showToast(error) }
     }
 
     fun hideLoading() {
-        activityRef.get()!!.progressBar.visibility = View.GONE
+        activityRef.get()?.let { it.progressbar_list_loader.visibility = View.GONE }
     }
 
     fun showCharacters(characters: List<Character>) {
@@ -52,11 +47,10 @@ class CharecterView(activity: MainActivity) {
     }
 
     fun showLoading() {
-        activityRef.get()!!.progressBar.visibility = View.VISIBLE
-
+        activityRef.get()?.let { it.progressbar_list_loader.visibility = View.VISIBLE }
     }
 
     fun setOnClickListenerFloatButton(clickListener: View.OnClickListener) {
-        activityRef.get()!!.reloadActionButton.setOnClickListener(clickListener)
+        activityRef.get()?.let { it.button_list_refresh.setOnClickListener(clickListener) }
     }
 }
