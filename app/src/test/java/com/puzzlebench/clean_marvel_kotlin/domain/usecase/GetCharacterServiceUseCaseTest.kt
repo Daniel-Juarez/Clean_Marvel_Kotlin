@@ -26,5 +26,4 @@ class GetCharacterServiceUseCaseTest {
         getCharacterServiceUseCase.invoke()
         verify(characterServiceImp).getCharacters()
     }
-
 }

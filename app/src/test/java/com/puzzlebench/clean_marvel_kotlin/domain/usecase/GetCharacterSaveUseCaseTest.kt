@@ -29,7 +29,5 @@ class GetCharacterSaveUseCaseTest {
         val getCharacterSaveUseCase = GetCharacterSaveUseCase(characterPersistenceImpl)
         getCharacterSaveUseCase.invoke(characterItems)
         verify(characterPersistenceImpl).saveCharacter(characterItems)
-
     }
-
 }

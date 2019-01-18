@@ -20,7 +20,6 @@ class CharacterMapperServiceTest {
     @Before
     fun setUp() {
         mapper = CharacterMapperService()
-
     }
 
     @Test
@@ -48,8 +47,5 @@ class CharacterMapperServiceTest {
         Assert.assertEquals(characterResponse.description, character.description)
         Assert.assertEquals(characterResponse.thumbnail.path, character.thumbnail.path)
         Assert.assertEquals(characterResponse.thumbnail.extension, character.thumbnail.extension)
-
-
     }
-
 }
