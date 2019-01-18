@@ -34,4 +34,6 @@ class CharacterMapperPersistence : BaseMapperRepository<Character, CharacterDB> 
 
 
     fun transform(listCharacters: List<Character>) = listCharacters.map { transform(it) }
+
+    fun transformDB(listCharacters: List<CharacterDB>) = listCharacters.map { transformToResponse(it) }
 }

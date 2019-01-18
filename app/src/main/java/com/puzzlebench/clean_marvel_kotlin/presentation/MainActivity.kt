@@ -3,6 +3,7 @@ package com.puzzlebench.clean_marvel_kotlin.presentation
 import android.os.Bundle
 import com.puzzlebench.clean_marvel_kotlin.R
 import com.puzzlebench.clean_marvel_kotlin.data.database.CharacterPersistenceImpl
+import com.puzzlebench.clean_marvel_kotlin.data.provider.ContentLoader
 import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServicesImpl
 import com.puzzlebench.clean_marvel_kotlin.domain.usecase.GetCharacterSaveUseCase
 import com.puzzlebench.clean_marvel_kotlin.domain.usecase.GetCharacterServiceUseCase

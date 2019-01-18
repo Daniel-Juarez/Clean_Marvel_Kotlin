@@ -46,10 +46,10 @@ class CharacterDetailView(fragment: DetailCharacterFragment) {
 
     fun showCharacters(character: Character) {
         fragmentRef.get()?.let {
-            it.text_detail_character_name.text = character.name
-            it.text_detail_character_description.text = character.description
-            val string = character.thumbnail.path + "." + character.thumbnail.extension
-            it.image_detail_character_thumbnail.getImageByUrl(string)
+            it.text_detail_character_name?.text = character.name
+            it.text_detail_character_description?.text = character.description
+            val string = character?.thumbnail.path + "." + character?.thumbnail.extension
+            it.image_detail_character_thumbnail?.getImageByUrl(string)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.puzzlebench.clean_marvel_kotlin.data.database
 
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.CharacterDB
 import com.puzzlebench.clean_marvel_kotlin.data.mapper.CharacterMapperPersistence
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import io.reactivex.Single
@@ -17,6 +18,19 @@ class CharacterPersistenceImpl(private val mapper: CharacterMapperPersistence = 
                 realm.commitTransaction()
             }
             true
+        }
+    }
+
+    override fun listCharacters(offset: Int): Single<List<Character>> {
+        return Single.fromCallable {
+            var characterList = emptyList<Character>()
+
+            Realm.getDefaultInstance().use{ realm ->
+                val query = realm.where(CharacterDB::class.java)
+                 characterList = mapper.transformDB(query.findAll().toList())
+
+            }
+            characterList
         }
     }
 }

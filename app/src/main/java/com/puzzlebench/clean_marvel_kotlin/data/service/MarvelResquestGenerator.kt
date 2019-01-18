@@ -21,6 +21,7 @@ class MarvelResquestGenerator {
 
         val defaulthttpUrl = defaultRequest.url()
         val httpUrl = defaulthttpUrl.newBuilder()
+                .addQueryParameter("orderBy","-modified")
                 .addQueryParameter(TS, timestamp.toString())
                 .addQueryParameter(PUBLIC_API_KEY_ARG, BuildConfig.PUBLIC_API_KEY_VALUE)
                 .addQueryParameter(PRIVATE_API_KEY_ARG, hash)
