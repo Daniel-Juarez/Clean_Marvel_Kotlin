@@ -8,23 +8,23 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.*
 
-class GetCharacterServiceUseCaseTest {
+class GetCharacterDetailServiceUseCaseTest {
 
     private lateinit var characterServiceImp: CharacterServicesImpl
 
     @Before
     fun setUp() {
-        val videoItems = CharactersFactory.getMockCharacterList()
-        val observable = Single.just(videoItems)
+        val characterItems = CharactersFactory.getMockCharacterSingle()
+        val observable = Single.just(characterItems)
         characterServiceImp = mock(CharacterServicesImpl::class.java)
-        `when`(characterServiceImp.getCharacters()).thenReturn(observable)
+        `when`(characterServiceImp.getCharacterDetail(1)).thenReturn(observable)
 
     }
 
     @Test operator fun invoke() {
-        val getCharacterServiceUseCase = GetCharacterServiceUseCase(characterServiceImp)
-        getCharacterServiceUseCase.invoke()
-        verify(characterServiceImp).getCharacters()
+        val getCharacterDetailServiceUseCase = GetCharacterDetailServiceUseCase(characterServiceImp)
+        getCharacterDetailServiceUseCase.invoke(1)
+        verify(characterServiceImp).getCharacterDetail(1)
     }
 
 }

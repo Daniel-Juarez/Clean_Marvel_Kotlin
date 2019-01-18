@@ -28,8 +28,6 @@ class CharecterView(activity: MainActivity): ContentLoader.ShowCharactersInterfa
             it.recycleview_list_characters.adapter = adapter
             it.loaderManager.initLoader(1,null, ContentLoader(it,this))
         }
-
-        showLoading()
     }
 
     fun showToastNoItemToShow() {
