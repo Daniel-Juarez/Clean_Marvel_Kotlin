@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rotate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="@dimen/degrees_start_rotating_animation"
+    android:toDegrees="@dimen/degrees_end_rotating_animation"
+    android:pivotX="@dimen/pivotX_rotating_animation"
+    android:pivotY="@dimen/pivotY_rotating_animation"
+    android:repeatCount="infinite"
+    android:duration="@integer/duration_rotating_animation" />

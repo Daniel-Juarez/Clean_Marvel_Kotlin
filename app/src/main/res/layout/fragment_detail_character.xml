@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.DetailCharacterFragment">
+    tools:context=".presentation.DetailCharacterFragment"
+    android:background="@android:color/black">
 
 
     <ProgressBar
@@ -36,7 +37,8 @@
         android:layout_marginTop="@dimen/margin_small"
         android:text="@string/name_placeholder_character"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_detail_character_thumbnail" />
+        app:layout_constraintTop_toBottomOf="@+id/image_detail_character_thumbnail"
+        style="@style/TextStyle.HeadLine"/>
 
 
     <TextView
@@ -54,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_detail_character_name"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintVertical_bias="0.302"
+        style="@style/TextStyle.Detail"/>
 
     <ImageButton
         android:id="@+id/button_detail_dismiss"
