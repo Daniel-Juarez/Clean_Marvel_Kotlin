@@ -3,7 +3,6 @@
     package="com.puzzlebench.clean_marvel_kotlin">
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -27,7 +26,6 @@
             android:exported="true" >
         </provider>
 
-        <activity android:name=".presentation.MainActivity"
-            />
+        <activity android:name=".presentation.MainActivity" />
     </application>
 </manifest>

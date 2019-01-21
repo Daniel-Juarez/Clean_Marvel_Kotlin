@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_landing.*
 import java.lang.ref.WeakReference
 
 
-class LandingView(val activity: LandingActivity) {
+class LandingView(activity: LandingActivity) {
     val activityRef = WeakReference(activity)
 
     fun init(){
@@ -26,7 +26,6 @@ class LandingView(val activity: LandingActivity) {
             val intent = Intent(it, MainActivity::class.java)
             it.startActivity(intent)
         }
-
     }
 
     fun finishActivity() {
