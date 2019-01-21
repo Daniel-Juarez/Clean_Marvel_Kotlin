@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_detail_character.*
 
 
 private const val ARG_ID_CHARACTER = "ID_CHARACTER"
+const val TAG_FRAGMENT_DETAIL_DIALOG = "DetailDialog"
 
 class DetailCharacterFragment : BaseRxDialogFragment() {
     var idCharacter: Int? = null

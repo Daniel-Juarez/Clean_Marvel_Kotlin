@@ -29,19 +29,19 @@ class CharacterPresenter(view: CharecterView, private val getCharacterServiceUse
                 saveCharactersOnDB(characters)
             }
             view.hideLoading()
-        }, { e ->
+        }, { requestError ->
             view.hideLoading()
-            view.showToastNetworkError(e.message.toString())
+            view.showToastNetworkError(requestError.message.toString())
         })
         subscriptions.add(subscription)
     }
 
     private fun saveCharactersOnDB(characters: List<Character>) {
         val subscription = getCharacterSaveUseCase.invoke(characters).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ success ->
-            view.showToastNetworkError("Saved")
+            view.showToastSaved()
             view.sendUpdateList()
-        }  , {e ->
-            view.showToastNetworkError(e.message.toString())
+        }  , {saveError ->
+            view.showToastNetworkError(saveError.message.toString())
         })
         subscriptions.add(subscription)
     }

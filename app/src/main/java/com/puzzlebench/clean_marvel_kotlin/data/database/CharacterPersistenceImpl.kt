@@ -21,7 +21,7 @@ class CharacterPersistenceImpl(private val mapper: CharacterMapperPersistence = 
         }
     }
 
-    override fun listCharacters(offset: Int): Single<List<Character>> {
+    override fun listCharacters(): Single<List<Character>> {
         return Single.fromCallable {
             var characterList = emptyList<Character>()
 

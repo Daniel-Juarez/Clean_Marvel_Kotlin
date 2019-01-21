@@ -19,8 +19,13 @@ class CharacterProvider: ContentProvider(){
     companion object {
         val AUTHORITY = "com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider"
         private val CHARACTERS_TABLE = "characters"
-        val CONTENT_URI : Uri = Uri.parse("content://" + AUTHORITY + "/" +
-                CHARACTERS_TABLE)
+        val CONTENT_URI : Uri = Uri.parse("content://$AUTHORITY/$CHARACTERS_TABLE")
+
+        const val ID_CHARACTER_PROVIDER_COLUMN = "_id"
+        const val NAME_CHARACTER_PROVIDER_COLUMN = "name"
+        const val DESCRIPTION_CHARACTER_PROVIDER_COLUMN = "description"
+        const val PATH_CHARACTER_PROVIDER_COLUMN = "path"
+        const val EXTENSION_CHARACTER_PROVIDER_COLUMN = "extension"
     }
 
     private val CHARACTERS = 1
@@ -39,7 +44,7 @@ class CharacterProvider: ContentProvider(){
     }
 
     override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
-        val cursor = MatrixCursor(arrayOf("_id", "name", "description","path", "extension"))
+        val cursor = MatrixCursor(arrayOf(ID_CHARACTER_PROVIDER_COLUMN, NAME_CHARACTER_PROVIDER_COLUMN, DESCRIPTION_CHARACTER_PROVIDER_COLUMN, PATH_CHARACTER_PROVIDER_COLUMN, EXTENSION_CHARACTER_PROVIDER_COLUMN))
 
         val characters = CharacterPersistenceImpl().listCharacters().blockingGet()
         for (character in characters) {
