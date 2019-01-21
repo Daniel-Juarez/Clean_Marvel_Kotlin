@@ -22,7 +22,7 @@ class CharacterPresenter(view: CharecterView, private val getCharacterServiceUse
 
     private fun requestGetCharacters() {
         view.showLoading()
-        val subscription = getCharacterServiceUseCase.invoke().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ characters ->
+        val subscription = getCharacterServiceUseCase().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ characters ->
             if (characters.isEmpty()) {
                 view.showToastNoItemToShow()
             } else {
@@ -37,7 +37,7 @@ class CharacterPresenter(view: CharecterView, private val getCharacterServiceUse
     }
 
     private fun saveCharactersOnDB(characters: List<Character>) {
-        val subscription = getCharacterSaveUseCase.invoke(characters).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ success ->
+        val subscription = getCharacterSaveUseCase(characters).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
             view.showToastSaved()
             view.sendUpdateList()
         }  , {saveError ->

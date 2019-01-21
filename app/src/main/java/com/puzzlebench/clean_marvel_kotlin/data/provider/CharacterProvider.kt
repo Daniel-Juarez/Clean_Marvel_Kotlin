@@ -12,6 +12,7 @@ import com.puzzlebench.clean_marvel_kotlin.data.database.CharacterPersistence
 import com.puzzlebench.clean_marvel_kotlin.data.database.CharacterPersistenceImpl
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import io.reactivex.Single
+import io.realm.exceptions.RealmException
 
 
 class CharacterProvider: ContentProvider(){
@@ -36,11 +37,15 @@ class CharacterProvider: ContentProvider(){
     }
 
     override fun onCreate(): Boolean {
-        val realmConfiguration = RealmConfiguration.Builder(context)
-        realmConfiguration.name("character")
-        realmConfiguration.deleteRealmIfMigrationNeeded()
-        Realm.setDefaultConfiguration(realmConfiguration.build())
-        return false
+        try {
+            val realmConfiguration = RealmConfiguration.Builder(context)
+            realmConfiguration.name("character")
+            realmConfiguration.deleteRealmIfMigrationNeeded()
+            Realm.setDefaultConfiguration(realmConfiguration.build())
+            return true
+        } catch (realmConfigurationError: RealmException){
+            return false
+        }
     }
 
     override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {

@@ -17,6 +17,7 @@ import com.puzzlebench.clean_marvel_kotlin.presentation.mvp.CharecterView
 
 
 class ContentLoader(val context: MainActivity, val view: CharecterView) : LoaderManager.LoaderCallbacks<Cursor> {
+
     private val showCharactersUpdate:ShowCharactersInterface = view
 
     override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<Cursor> {
@@ -46,7 +47,9 @@ class ContentLoader(val context: MainActivity, val view: CharecterView) : Loader
         showCharactersUpdate.updateCharacter(characters)
     }
 
-    override fun onLoaderReset(cursorLoader: Loader<Cursor>?) { }
+    override fun onLoaderReset(cursorLoader: Loader<Cursor>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     interface ShowCharactersInterface{
         fun updateCharacter(characters: List<Character>)
