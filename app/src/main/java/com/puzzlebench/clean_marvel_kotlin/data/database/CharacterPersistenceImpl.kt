@@ -18,7 +18,7 @@ class CharacterPersistenceImpl(val mapper: CharacterMapperPersistence = Characte
     }
 
     override fun listCharacters() =  Single.fromCallable {
-            var characterList = emptyList<Character>()
+        var characterList = emptyList<Character>()
 
         Realm.getDefaultInstance().use{ realm ->
             val query = realm.where(CharacterDB::class.java)
