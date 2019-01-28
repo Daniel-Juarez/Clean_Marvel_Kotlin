@@ -1,12 +1,15 @@
 package com.puzzlebench.clean_marvel_kotlin.data.provider
 
 import android.app.LoaderManager
-import android.content.Context
 import android.content.CursorLoader
 import android.content.Loader
 import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
+import com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider.Companion.DESCRIPTION_CHARACTER_PROVIDER_COLUMN
+import com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider.Companion.EXTENSION_CHARACTER_PROVIDER_COLUMN
+import com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider.Companion.ID_CHARACTER_PROVIDER_COLUMN
+import com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider.Companion.NAME_CHARACTER_PROVIDER_COLUMN
+import com.puzzlebench.clean_marvel_kotlin.data.provider.CharacterProvider.Companion.PATH_CHARACTER_PROVIDER_COLUMN
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Thumbnail
 import com.puzzlebench.clean_marvel_kotlin.presentation.MainActivity
@@ -14,6 +17,7 @@ import com.puzzlebench.clean_marvel_kotlin.presentation.mvp.CharecterView
 
 
 class ContentLoader(val context: MainActivity, val view: CharecterView) : LoaderManager.LoaderCallbacks<Cursor> {
+
     private val showCharactersUpdate:ShowCharactersInterface = view
 
     override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<Cursor> {
@@ -28,10 +32,12 @@ class ContentLoader(val context: MainActivity, val view: CharecterView) : Loader
             while (!it.isAfterLast()) {
                 characters.add(
                         Character(
-                                it.getInt(0),
-                                it.getString(1),
-                                it.getString(2),
-                                Thumbnail(it.getString(3),it.getString(4))
+                                it.getInt(it.getColumnIndex(ID_CHARACTER_PROVIDER_COLUMN)),
+                                it.getString(it.getColumnIndex(NAME_CHARACTER_PROVIDER_COLUMN)),
+                                it.getString(it.getColumnIndex(DESCRIPTION_CHARACTER_PROVIDER_COLUMN)),
+                                    Thumbnail(
+                                            it.getString(it.getColumnIndex(PATH_CHARACTER_PROVIDER_COLUMN)),
+                                            it.getString(it.getColumnIndex(EXTENSION_CHARACTER_PROVIDER_COLUMN)))
                         )
                 )
                 it.moveToNext()
@@ -41,7 +47,9 @@ class ContentLoader(val context: MainActivity, val view: CharecterView) : Loader
         showCharactersUpdate.updateCharacter(characters)
     }
 
-    override fun onLoaderReset(cursorLoader: Loader<Cursor>?) { }
+    override fun onLoaderReset(cursorLoader: Loader<Cursor>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     interface ShowCharactersInterface{
         fun updateCharacter(characters: List<Character>)
