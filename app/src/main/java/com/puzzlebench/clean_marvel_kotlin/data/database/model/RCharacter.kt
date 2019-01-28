@@ -5,9 +5,9 @@ import io.realm.annotations.PrimaryKey
 
 const val ID_CHARACTER_DEFAULT_DB = 0
 
-open class CharacterDB(
+open class RCharacter(
     @PrimaryKey var id: Int = ID_CHARACTER_DEFAULT_DB,
     var name: String = "",
     var description: String = "",
-    var thumbnail: ThumbnailDB? = null
+    var RThumbnail: RThumbnail? = null
 ): RealmObject()

@@ -1,6 +1,6 @@
 package com.puzzlebench.clean_marvel_kotlin.data.database
 
-import com.puzzlebench.clean_marvel_kotlin.data.database.model.CharacterDB
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.RCharacter
 import com.puzzlebench.clean_marvel_kotlin.data.mapper.CharacterMapperPersistence
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import io.reactivex.Completable
@@ -21,7 +21,7 @@ class CharacterPersistenceImpl(val mapper: CharacterMapperPersistence = Characte
         var characterList = emptyList<Character>()
 
         Realm.getDefaultInstance().use{ realm ->
-            val query = realm.where(CharacterDB::class.java)
+            val query = realm.where(RCharacter::class.java)
              characterList = mapper.transformDB(query.findAll().toList())
         }
         characterList

@@ -36,17 +36,7 @@ class CharacterProvider: ContentProvider(){
         sURIMatcher.addURI(AUTHORITY, CHARACTERS_TABLE, CHARACTERS)
     }
 
-    override fun onCreate(): Boolean {
-        try {
-            val realmConfiguration = RealmConfiguration.Builder(context)
-            realmConfiguration.name("character")
-            realmConfiguration.deleteRealmIfMigrationNeeded()
-            Realm.setDefaultConfiguration(realmConfiguration.build())
-            return true
-        } catch (realmConfigurationError: RealmException){
-            return false
-        }
-    }
+    override fun onCreate() = true
 
     override fun query(uri: Uri?, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
         val cursor = MatrixCursor(arrayOf(ID_CHARACTER_PROVIDER_COLUMN, NAME_CHARACTER_PROVIDER_COLUMN, DESCRIPTION_CHARACTER_PROVIDER_COLUMN, PATH_CHARACTER_PROVIDER_COLUMN, EXTENSION_CHARACTER_PROVIDER_COLUMN))

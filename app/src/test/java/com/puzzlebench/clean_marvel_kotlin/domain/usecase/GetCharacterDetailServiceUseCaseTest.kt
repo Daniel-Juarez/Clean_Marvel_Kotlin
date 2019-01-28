@@ -1,15 +1,16 @@
 package com.puzzlebench.clean_marvel_kotlin.domain.usecase
 
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.stub
 import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServicesImpl
 import com.puzzlebench.clean_marvel_kotlin.mocks.factory.CharactersFactory
-import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 
 class GetCharacterDetailServiceUseCaseTest {
-
     private lateinit var characterServiceImp: CharacterServicesImpl
 
     @Before
@@ -17,13 +18,15 @@ class GetCharacterDetailServiceUseCaseTest {
         val characterItems = CharactersFactory.getMockCharacterSingle()
         val observable = Single.just(characterItems)
         characterServiceImp = mock(CharacterServicesImpl::class.java)
-        `when`(characterServiceImp.getCharacterDetail(1)).thenReturn(observable)
-
+        characterServiceImp.stub {
+            on { characterServiceImp.getCharacterDetail(1) } doReturn observable
+        }
     }
 
-    @Test operator fun invoke() {
+    @Test
+    fun `Test character detail service use case`() {
         val getCharacterDetailServiceUseCase = GetCharacterDetailServiceUseCase(characterServiceImp)
-        getCharacterDetailServiceUseCase.invoke(1)
+        getCharacterDetailServiceUseCase(1)
         verify(characterServiceImp).getCharacterDetail(1)
     }
 }

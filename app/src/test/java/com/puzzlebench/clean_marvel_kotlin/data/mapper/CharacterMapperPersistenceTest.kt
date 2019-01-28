@@ -1,7 +1,7 @@
 package com.puzzlebench.clean_marvel_kotlin.data.mapper
 
-import com.puzzlebench.clean_marvel_kotlin.data.database.model.CharacterDB
-import com.puzzlebench.clean_marvel_kotlin.data.database.model.ThumbnailDB
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.RCharacter
+import com.puzzlebench.clean_marvel_kotlin.data.database.model.RThumbnail
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Thumbnail
 import junit.framework.Assert
@@ -20,11 +20,10 @@ class CharacterMapperPersistenceTest {
     @Before
     fun setUp() {
         mapper = CharacterMapperPersistence()
-
     }
 
     @Test
-    fun transform() {
+    fun `Transform character from Domain model to Realm model`() {
 
         val mockThumbnailResponse = Thumbnail(PAHT, EXTENSION)
         val mockCharacterResponse = Character(ID, NAME, DESCRIPTION, mockThumbnailResponse)
@@ -33,21 +32,18 @@ class CharacterMapperPersistenceTest {
     }
 
     @Test
-    fun transformToDB() {
-        val mockThumbnail = ThumbnailDB(PAHT, EXTENSION)
-        val mockCharacter = CharacterDB(ID, NAME, DESCRIPTION, mockThumbnail)
+    fun `Transform character from Realm model to Domain model`() {
+        val mockThumbnail = RThumbnail(PAHT, EXTENSION)
+        val mockCharacter = RCharacter(ID, NAME, DESCRIPTION, mockThumbnail)
         val result = mapper.transformToResponse(mockCharacter)
         assertBufferooDataEquality(result, mockCharacter)
-
     }
 
-    private fun assertBufferooDataEquality(character: Character, characterDB: CharacterDB) {
-        Assert.assertEquals(characterDB.id, character.id)
-        Assert.assertEquals(characterDB.name, character.name)
-        Assert.assertEquals(characterDB.description, character.description)
-        Assert.assertEquals(characterDB.thumbnail?.path, character.thumbnail.path)
-        Assert.assertEquals(characterDB.thumbnail?.extension, character.thumbnail.extension)
-
-
+    private fun assertBufferooDataEquality(character: Character, RCharacter: RCharacter) {
+        Assert.assertEquals(RCharacter.id, character.id)
+        Assert.assertEquals(RCharacter.name, character.name)
+        Assert.assertEquals(RCharacter.description, character.description)
+        Assert.assertEquals(RCharacter.RThumbnail?.path, character.thumbnail.path)
+        Assert.assertEquals(RCharacter.RThumbnail?.extension, character.thumbnail.extension)
     }
 }

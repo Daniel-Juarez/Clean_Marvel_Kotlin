@@ -1,20 +1,20 @@
 package com.puzzlebench.clean_marvel_kotlin.presentation.mvp
 
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.stub
 import com.puzzlebench.clean_marvel_kotlin.data.database.CharacterPersistenceImpl
 import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServicesImpl
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import com.puzzlebench.clean_marvel_kotlin.domain.usecase.GetCharacterSaveUseCase
 import com.puzzlebench.clean_marvel_kotlin.domain.usecase.GetCharacterServiceUseCase
 import com.puzzlebench.clean_marvel_kotlin.mocks.factory.CharactersFactory
-import io.reactivex.Observable
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
@@ -29,7 +29,6 @@ class CharacterPresenterTest {
     private lateinit var getCharacterServiceUseCase: GetCharacterServiceUseCase
     private lateinit var getCharacterSaveUseCase: GetCharacterSaveUseCase
 
-
     @Before
     fun setUp() {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { scheduler -> Schedulers.trampoline() }
@@ -42,7 +41,10 @@ class CharacterPresenterTest {
 
     @Test
     fun reposeWithError() {
-        Mockito.`when`(getCharacterServiceUseCase.invoke()).thenReturn(Single.error(Exception("")))
+        getCharacterSaveUseCase.stub {
+            on { getCharacterServiceUseCase() } doReturn Single.error(Exception(""))
+        }
+
         characterPresenter.init()
         verify(view).init()
         verify(characterServiceImp).getCharacters()
@@ -54,9 +56,14 @@ class CharacterPresenterTest {
     fun reposeWithItemToShow() {
         val itemsCharacters = CharactersFactory.getMockCharacterList()
         val observable = Single.just(itemsCharacters)
-        val observableSave = Single.just(true)
-        Mockito.`when`(getCharacterServiceUseCase.invoke()).thenReturn(observable)
-        Mockito.`when`(getCharacterSaveUseCase.invoke(itemsCharacters)).thenReturn(observableSave)
+        val observableSave = Completable.complete()
+        getCharacterServiceUseCase.stub {
+            on { getCharacterServiceUseCase() } doReturn observable
+        }
+        getCharacterSaveUseCase.stub {
+            on { getCharacterSaveUseCase(itemsCharacters) } doReturn observableSave
+        }
+
         characterPresenter.init()
         verify(view).init()
         verify(characterServiceImp).getCharacters()
@@ -68,9 +75,13 @@ class CharacterPresenterTest {
     fun reposeWithoutItemToShow() {
         val itemsCharacters = emptyList<Character>()
         val observable = Single.just(itemsCharacters)
-        val observableSave = Single.just(true)
-        Mockito.`when`(getCharacterServiceUseCase.invoke()).thenReturn(observable)
-        Mockito.`when`(getCharacterSaveUseCase.invoke(itemsCharacters)).thenReturn(observableSave)
+        val observableSave = Completable.complete()
+        getCharacterServiceUseCase.stub {
+            on { getCharacterServiceUseCase() } doReturn observable
+        }
+        getCharacterSaveUseCase.stub {
+            on { getCharacterSaveUseCase(itemsCharacters) } doReturn observableSave
+        }
 
         characterPresenter.init()
         verify(view).init()
