@@ -22,26 +22,26 @@ class CharacterPresenter(view: CharecterView, private val getCharacterServiceUse
 
     private fun requestGetCharacters() {
         view.showLoading()
-        val subscription = getCharacterServiceUseCase.invoke().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ characters ->
+        val subscription = getCharacterServiceUseCase().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ characters ->
             if (characters.isEmpty()) {
                 view.showToastNoItemToShow()
             } else {
                 saveCharactersOnDB(characters)
             }
             view.hideLoading()
-        }, { e ->
+        }, { requestError ->
             view.hideLoading()
-            view.showToastNetworkError(e.message.toString())
+            view.showToastNetworkError(requestError.message.toString())
         })
         subscriptions.add(subscription)
     }
 
     private fun saveCharactersOnDB(characters: List<Character>) {
-        val subscription = getCharacterSaveUseCase.invoke(characters).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ success ->
-            view.showToastNetworkError("Saved")
+        val subscription = getCharacterSaveUseCase(characters).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            view.showToastSaved()
             view.sendUpdateList()
-        }  , {e ->
-            view.showToastNetworkError(e.message.toString())
+        }  , {saveError ->
+            view.showToastNetworkError(saveError.message.toString())
         })
         subscriptions.add(subscription)
     }

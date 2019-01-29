@@ -1,5 +1,7 @@
 package com.puzzlebench.clean_marvel_kotlin.presentation.mvp
 
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.stub
 import com.puzzlebench.clean_marvel_kotlin.data.service.CharacterServicesImpl
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import com.puzzlebench.clean_marvel_kotlin.domain.usecase.GetCharacterDetailServiceUseCase
@@ -10,7 +12,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
@@ -21,7 +22,6 @@ class CharacterDetailPresenterTest {
     private var characterServiceImp = mock(CharacterServicesImpl::class.java)
     private lateinit var characterDetailPresenter: CharacterDetailPresenter
     private lateinit var getCharacterDetailServiceUseCase: GetCharacterDetailServiceUseCase
-
 
     @Before
     fun setUp() {
@@ -34,34 +34,49 @@ class CharacterDetailPresenterTest {
 
     @Test
     fun reposeWithError() {
-        Mockito.`when`(getCharacterDetailServiceUseCase.invoke(1)).thenReturn(Single.error(Exception("")))
+        getCharacterDetailServiceUseCase.stub {
+            on { getCharacterDetailServiceUseCase(1) } doReturn Single.error(Exception(""))
+        }
+        view.stub {
+            on { view?.idCharacter } doReturn 1
+        }
+
         characterDetailPresenter.init()
         verify(view).init()
         verify(characterServiceImp).getCharacterDetail(1)
         verify(view).hideLoading()
         verify(view).showToastNetworkError("")
-
     }
 
     @Test
     fun reposeWithItemToShow() {
         val itemsCharacters = CharactersFactory.getMockCharacterList()
         val observable = Single.just(itemsCharacters)
-        Mockito.`when`(getCharacterDetailServiceUseCase.invoke(1)).thenReturn(observable)
-        Mockito.`when`(view?.idCharacter).thenReturn(1)
+        getCharacterDetailServiceUseCase.stub {
+            on { getCharacterDetailServiceUseCase(1) } doReturn observable
+        }
+        view.stub {
+            on { view?.idCharacter } doReturn 1
+        }
+
         characterDetailPresenter.init()
         verify(view).init()
         verify(characterServiceImp).getCharacterDetail(1)
+        verify(view).showCharacters(itemsCharacters.first())
         verify(view).hideLoading()
-        verify(view).showCharacters(itemsCharacters[0])
     }
 
     @Test
     fun reposeWithoutItemToShow() {
         val itemsCharacters = emptyList<Character>()
         val observable = Single.just(itemsCharacters)
-        Mockito.`when`(getCharacterDetailServiceUseCase.invoke(1)).thenReturn(observable)
-        Mockito.`when`(view?.idCharacter).thenReturn(1)
+        getCharacterDetailServiceUseCase.stub {
+            on { getCharacterDetailServiceUseCase(1) } doReturn observable
+        }
+        view.stub {
+            on { view?.idCharacter } doReturn 1
+        }
+
         characterDetailPresenter.init()
         verify(view).init()
         verify(characterServiceImp).getCharacterDetail(1)

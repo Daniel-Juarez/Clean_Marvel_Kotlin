@@ -13,11 +13,11 @@ class CharacterDetailPresenter(view: CharacterDetailView, private val getCharact
     }
 
     private fun requestGetCharacterDetail() {
-        val subscription = getCharacterDetailServiceUseCase.invoke(view.idCharacter ?: 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ character ->
+        val subscription = getCharacterDetailServiceUseCase(view.idCharacter ?: 0).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({ character ->
             if (character.isEmpty()) {
                 view.showToastNoItemToShow()
             } else {
-                view.showCharacters(character[0])
+                view.showCharacters(character.first())
             }
             view.hideLoading()
         }, { e ->

@@ -3,9 +3,11 @@ package com.puzzlebench.clean_marvel_kotlin.data.database.model
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class CharacterDB(
-    @PrimaryKey var id: Int = 0,
+const val ID_CHARACTER_DEFAULT_DB = 0
+
+open class RCharacter(
+    @PrimaryKey var id: Int = ID_CHARACTER_DEFAULT_DB,
     var name: String = "",
     var description: String = "",
-    var thumbnail: ThumbnailDB? = null
+    var RThumbnail: RThumbnail? = null
 ): RealmObject()

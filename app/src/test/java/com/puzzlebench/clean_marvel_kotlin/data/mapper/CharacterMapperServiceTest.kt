@@ -23,8 +23,7 @@ class CharacterMapperServiceTest {
     }
 
     @Test
-    fun transform() {
-
+    fun `Transform character from Response model to Domain model`() {
         val mockThumbnailResponse = ThumbnailResponse(PAHT, EXTENSION)
         val mockCharacterResponse = CharacterResponse(ID, NAME, DESCRIPTION, mockThumbnailResponse)
         val result = mapper.transform(mockCharacterResponse)
@@ -32,12 +31,11 @@ class CharacterMapperServiceTest {
     }
 
     @Test
-    fun transformToResponse() {
+    fun `Transform character from Domain model to Response model`() {
         val mockThumbnail = Thumbnail(PAHT, EXTENSION)
         val mockCharacter = Character(ID, NAME, DESCRIPTION, mockThumbnail)
         val result = mapper.transformToResponse(mockCharacter)
         assertBufferooDataEquality(result, mockCharacter)
-
     }
 
     private fun assertBufferooDataEquality(characterResponse: CharacterResponse,

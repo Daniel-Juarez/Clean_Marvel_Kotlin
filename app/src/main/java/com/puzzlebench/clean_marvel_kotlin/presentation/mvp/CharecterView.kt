@@ -8,6 +8,7 @@ import com.puzzlebench.clean_marvel_kotlin.data.provider.ContentLoader
 import com.puzzlebench.clean_marvel_kotlin.domain.model.Character
 import com.puzzlebench.clean_marvel_kotlin.presentation.DetailCharacterFragment
 import com.puzzlebench.clean_marvel_kotlin.presentation.MainActivity
+import com.puzzlebench.clean_marvel_kotlin.presentation.TAG_FRAGMENT_DETAIL_DIALOG
 import com.puzzlebench.clean_marvel_kotlin.presentation.adapter.CharacterAdapter
 import com.puzzlebench.clean_marvel_kotlin.presentation.extension.showToast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,16 +18,17 @@ class CharecterView(activity: MainActivity): ContentLoader.ShowCharactersInterfa
 
     private val activityRef = WeakReference(activity)
     private val SPAN_COUNT = 1
+    private val ID_CHARACTERS_LOADER = 1
     var adapter = CharacterAdapter { character ->
         val fragment = DetailCharacterFragment.newInstance(character.id)
-        fragment.show(activity.fragmentManager,"DetailDialog")
+        fragment.show(activity.fragmentManager,TAG_FRAGMENT_DETAIL_DIALOG)
     }
 
     fun init() {
         activityRef.get()?.let {
             it.recycleview_list_characters.layoutManager = GridLayoutManager(it, SPAN_COUNT)
             it.recycleview_list_characters.adapter = adapter
-            it.loaderManager.initLoader(1,null, ContentLoader(it,this))
+            it.loaderManager.initLoader(ID_CHARACTERS_LOADER, null, ContentLoader(it,this))
         }
     }
 
@@ -66,5 +68,9 @@ class CharecterView(activity: MainActivity): ContentLoader.ShowCharactersInterfa
         activityRef.get()?.let {
             it.contentResolver.notifyChange(CharacterProvider.CONTENT_URI, null)
         }
+    }
+
+    fun showToastSaved() {
+        activityRef.get()?.let { it.applicationContext.showToast(it.resources.getString(R.string.message_toast_saved)) }
     }
 }
