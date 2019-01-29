@@ -30,14 +30,6 @@ class CharacterMapperServiceTest {
         assertBufferooDataEquality(mockCharacterResponse, result)
     }
 
-    @Test
-    fun `Transform character from Domain model to Response model`() {
-        val mockThumbnail = Thumbnail(PAHT, EXTENSION)
-        val mockCharacter = Character(ID, NAME, DESCRIPTION, mockThumbnail)
-        val result = mapper.transformToResponse(mockCharacter)
-        assertBufferooDataEquality(result, mockCharacter)
-    }
-
     private fun assertBufferooDataEquality(characterResponse: CharacterResponse,
                                            character: Character) {
         Assert.assertEquals(characterResponse.id, character.id)

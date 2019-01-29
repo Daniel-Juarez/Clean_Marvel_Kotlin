@@ -27,7 +27,6 @@ class CharactersFactory {
 
         open fun getMockCharacter(): Character {
             return Character(BASE_ID, "$BASE_NAME$", "$BASE_DESCRIPTION$", Thumbnail("$BASE_PATH$", BASE_EXTENSION))
-
         }
     }
 }
